@@ -1,5 +1,8 @@
+#!/usr/bin/env node
+
 const program = require('commander')
 const CLI = require('./src/CLI')
+
 program
   .version('0.0.0')
   .parse(process.argv)
