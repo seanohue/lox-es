@@ -25,6 +25,7 @@ class CLI {
   }
 
   static run (source = '') {
+    console.log(`Source: ${source}`)
     const scanner = new Scanner(source)
   }
 }
