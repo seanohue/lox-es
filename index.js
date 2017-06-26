@@ -1,22 +1,13 @@
 const program = require('commander')
-
+const CLI = require('./src/CLI')
 program
   .version('0.0.0')
   .parse(process.argv)
 
-class LoxCLI {
-  static runFile(file) {
-    console.log(file)
-  }
-  static runPrompt() {
-    console.log('prompt!')
-  }
-}
-
 if (program.args.length > 1) {
   console.error(`Usage: 'lox-es [scriptfile]'`)
 } else if (program.args.length === 1) {
-  LoxCLI.runFile(program.args[0])
+  CLI.runFile(program.args[0])
 } else {
-  LoxCLI.runPrompt()
+  CLI.runPrompt()
 }

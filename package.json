@@ -4,7 +4,7 @@
   "description": "An interpreter for the Lox programming language written using NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard --verbose | lolcat"
   },
   "repository": {
     "type": "git",
