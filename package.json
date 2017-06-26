@@ -4,7 +4,8 @@
   "description": "An interpreter for the Lox programming language written using NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "standard --verbose"
+    "test": "standard --verbose",
+    "fix": "standard --fix"
   },
   "repository": {
     "type": "git",
