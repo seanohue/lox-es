@@ -1,5 +1,5 @@
 {
-  "name": "lox-es6",
+  "name": "lox-es",
   "version": "0.0.0",
   "description": "An interpreter for the Lox programming language written using NodeJS",
   "main": "index.js",
