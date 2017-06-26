@@ -1,4 +1,3 @@
-
 class Token {
   constructor (type, lexeme = '', literal = {}, line) {
     this.type = type
@@ -8,7 +7,7 @@ class Token {
   }
 
   toString () {
-    return `${this.type.toString()} ${this.lexeme} ${JSON.stringify(this.literal)}`
+    return `${this.type.toString()} ${this.lexeme} ${JSON.stringify(this.literal, 2)}`
   }
 }
 
