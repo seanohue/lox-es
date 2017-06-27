@@ -15,6 +15,18 @@ class Scanner {
     return this.current >= this.source.length
   }
 
+  get currentChar () {
+    return this.source.charAt(this.current)
+  }
+
+  get currentChunk () {
+    return this.source.substring(this.start, this.current)
+  }
+
+  get trimmedChunk () {
+    return this.source.substring(this.start + 1, this.current - 1)
+  }
+
   scanTokens () {
     while (!this.isAtEnd) {
       this.start = this.current
@@ -64,21 +76,32 @@ class Scanner {
         } else {
           this.addToken(TT.SLASH)
         }
-        return
+        break
+
+      // Literals
+      case '"': return this.string()
 
       // Ignore whitespace.
       case ' ':
       case '\r':
       case '\t':
-        break;
+        break
 
       case '\n':
-        line += 1;
-        break;
+        this.line += 1
+        break
 
       default:
-        this.CLI.error(this.line, 'Unexpected character')
+        if (this.isDigit(char)) {
+          // do stuff lol
+        } else {
+          this.CLI.error(this.line, 'Unexpected character')
+        }
     }
+  }
+
+  isDigit (char) {
+    return false
   }
 
   advance () {
@@ -88,7 +111,7 @@ class Scanner {
 
   match (expected = '') {
     if (this.isAtEnd) return false
-    if (this.source.charAt(this.current) !== expected) return false
+    if (this.currentChar !== expected) return false
 
     this.current += 1
 
@@ -99,13 +122,30 @@ class Scanner {
     return !['\n', '\0'].includes(this.peek())
   }
 
+  string () {
+    while (this.peek() !== '"' && !this.isAtEnd) {
+      if (this.peek() === '\n') this.line += 1
+      this.advance()
+    }
+
+    if (this.isAtEnd) {
+      return this.CLI.error(this.line, 'Unterminated String')
+    }
+
+    this.advance() // Consume closing ".
+
+    // Trim quotes
+    const value = this.trimmedChunk
+    return this.addToken(TT.STRING, value)
+  }
+
   peek () {
     if (this.isAtEnd) return '\0'
-    return this.source.charAt(this.current)
+    return this.currentChar
   }
 
   addToken (type, literal = null) {
-    const text = this.source.substring(this.start, this.current)
+    const text = this.currentChunk
     this.tokens.push(new Token(type, text, literal, this.line))
   }
 
