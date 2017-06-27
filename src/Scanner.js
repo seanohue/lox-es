@@ -85,7 +85,7 @@ class Scanner {
   }
 
   isSameLine () {
-    return ['\n', '\0'].includes(this.peek())
+    return !['\n', '\0'].includes(this.peek())
   }
 
   peek () {
