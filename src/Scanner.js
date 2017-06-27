@@ -65,6 +65,17 @@ class Scanner {
           this.addToken(TT.SLASH)
         }
         return
+
+      // Ignore whitespace.
+      case ' ':
+      case '\r':
+      case '\t':
+        break;
+
+      case '\n':
+        line += 1;
+        break;
+
       default:
         this.CLI.error(this.line, 'Unexpected character')
     }
