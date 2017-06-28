@@ -1,4 +1,4 @@
-const TT = require('./TokenTypes')
+const TT = require('./TokenType')
 
 module.exports = (new Map(Object.entries({
   and: TT.AND,

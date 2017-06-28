@@ -128,7 +128,7 @@ class Scanner {
   }
 
   isDigit (char) {
-    return !isNaN(char)
+    return char >= '0' && char <= '9'
   }
 
   isAlpha (char) {
