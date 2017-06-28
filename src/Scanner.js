@@ -94,6 +94,8 @@ class Scanner {
       default: {
         if (this.isDigit(char)) {
           return this.number()
+        } else if (this.isAlpha(char)) {
+          return this.identifier()
         }
         return this.CLI.error(this.line, 'Unexpected character')
       }
@@ -126,6 +128,16 @@ class Scanner {
 
   isDigit (char) {
     return !isNaN(char)
+  }
+
+  isAlpha (char) {
+    return (char >= 'a' && char <= 'z') ||
+           (char >= 'A' && char <= 'Z') ||
+            char === '_'
+  }
+
+  isAlphaNumeric (char) {
+    return this.isDigit(char) || this.isAlpha(char)
   }
 
   isSameLine () {
