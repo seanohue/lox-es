@@ -91,17 +91,17 @@ class Scanner {
         this.line += 1
         break
 
-      default:
+      default: {
         if (this.isDigit(char)) {
-          // do stuff lol
-        } else {
-          this.CLI.error(this.line, 'Unexpected character')
+          return this.number()
         }
+        return this.CLI.error(this.line, 'Unexpected character')
+      }
     }
   }
 
   isDigit (char) {
-    return false
+    return !isNaN(char)
   }
 
   advance () {
