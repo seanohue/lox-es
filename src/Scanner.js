@@ -9,6 +9,7 @@ class Scanner {
     this.current = 0
     this.start = 0
     this.CLI = require('./CLI')
+    this.keywords = require('./types/Keywords')
   }
 
   get isAtEnd () {
@@ -171,6 +172,11 @@ class Scanner {
     }
 
     return this.addToken(TT.NUMBER, parseFloat(this.currentChunk))
+  }
+
+  identifier () {
+    while (this.isAlphaNumeric(this.peek())) this.advance()
+    this.addToken(TT.IDENTIFIER)
   }
 
   addToken (type, literal = null) {
