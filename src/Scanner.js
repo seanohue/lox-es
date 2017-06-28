@@ -176,7 +176,11 @@ class Scanner {
 
   identifier () {
     while (this.isAlphaNumeric(this.peek())) this.advance()
-    this.addToken(TT.IDENTIFIER)
+
+    const text = this.currentChunk
+    const type = this.keywords.get(text) || TT.IDENTIFIER
+
+    this.addToken(type)
   }
 
   addToken (type, literal = null) {
