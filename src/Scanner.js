@@ -100,13 +100,19 @@ class Scanner {
     }
   }
 
-  isDigit (char) {
-    return !isNaN(char)
-  }
-
   advance () {
     this.current += 1
     return this.source.charAt(this.current - 1)
+  }
+
+  peek () {
+    if (this.isAtEnd) return '\0'
+    return this.currentChar
+  }
+
+  peekNext () {
+    if (this.current + 1 >= this.source.length()) return '\0'
+    return this.source.charAt(this.current + 1)
   }
 
   match (expected = '') {
@@ -116,6 +122,10 @@ class Scanner {
     this.current += 1
 
     return true
+  }
+
+  isDigit (char) {
+    return !isNaN(char)
   }
 
   isSameLine () {
@@ -139,18 +149,25 @@ class Scanner {
     return this.addToken(TT.STRING, value)
   }
 
-  peek () {
-    if (this.isAtEnd) return '\0'
-    return this.currentChar
+  number () {
+    while (this.isDigit(this.peek())) this.advance()
+
+    // Handle fractions
+    if (this.peek() === '.' && this.isDigit(this.peekNext())) {
+      this.advance()
+      while (this.isDigit(this.peek())) this.advance()
+    }
+
+    return this.addToken(TT.NUMBER, parseFloat(this.currentChunk))
   }
 
   addToken (type, literal = null) {
     const text = this.currentChunk
-    this.tokens.push(new Token(type, text, literal, this.line))
+    return this.tokens.push(new Token(type, text, literal, this.line))
   }
 
   addEOF () {
-    this.tokens.push(new Token(TT.EOF, '', null, this.line))
+    return this.tokens.push(new Token(TT.EOF, '', null, this.line))
   }
 }
 
