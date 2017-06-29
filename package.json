@@ -4,7 +4,9 @@
   "description": "An interpreter for the Lox programming language written using NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "standard --verbose",
+    "standard": "standard --verbose",
+    "mocha": "mocha ./spec/**/*.spec.js",
+    "test": "npm run standard && npm run mocha",
     "fix": "standard --fix"
   },
   "standard": {
@@ -40,6 +42,7 @@
     "standard": "^10.0.2"
   },
   "dependencies": {
+    "chai": "^4.0.2",
     "commander": "^2.10.0",
     "standard": "^10.0.2"
   }

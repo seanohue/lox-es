@@ -1,3 +1,5 @@
+const { expect } = require('chai')
+
 const Scanner = require('../src/Scanner')
 const TT = require('../src/types/TokenType')
 
@@ -25,6 +27,11 @@ describe('Lexical Scanner', () => {
         type: TT.STRING,
         lexeme: '"world"',
         literal: 'world',
+        line: 1
+      }, {
+        type: TT.EOF,
+        lexeme: '',
+        literal: null,
         line: 1
       }])
   })
