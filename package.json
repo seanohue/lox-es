@@ -7,6 +7,18 @@
     "test": "standard --verbose",
     "fix": "standard --fix"
   },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seanohue/lox-es6.git"
