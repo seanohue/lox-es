@@ -18,7 +18,7 @@ class ASTWriter {
 
     for (const typeDef of types) {
       const parsedTypeDef = ASTWriter.parseTypeDef(typeDef)
-      const subClassPath = `${outputDir}/${parsedTypeDef.className}}`
+      const subClassPath = `${outputDir}/${parsedTypeDef.className}.js`
       ASTWriter.writeExprClass(path, baseName, parsedTypeDef)
     }
   }
@@ -33,8 +33,7 @@ ${typeDef ? 'const Expr = require(\'./Expr\')' : ''}
 class ${typeDef ? `${className} extends ${baseName}` : baseName} {
   ${typeDef
     ? `constructor(${argList}) {
-      ${['\n']
-          .concat(argList)
+      ${'\n'.concat(argList)
           .split(', ')
           .map(arg => `${' '.repeat(6)}this.${arg} = ${arg}`)
           .join('\n')}
