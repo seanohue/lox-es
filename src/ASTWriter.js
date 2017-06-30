@@ -1,13 +1,15 @@
+const fs = require('fs')
+
 class ASTWriter {
   static generateAST () {
     const expressionsDir = `${__dirname}/expressions`
-    ASTWriter.defineAst(expressionsDir, 'Expr', [
+    ASTWriter.defineAST(expressionsDir, 'Expr', [
       'Binary   : left, operator, right',
       'Grouping : expression',
       'Literal  : value',
       'Unary    : operator, right'
     ])
-    console.log(`AST generated in ${outputDir}.`)
+    console.log(`AST generated in ${expressionsDir}.`)
   }
 
   static defineAST (outputDir, baseName, types = []) {
@@ -27,10 +29,10 @@ class ASTWriter {
     fs.writeFileSync(path,
 // Template for code generation:
 `
-${typeDef ? 'const Expr = require(\'./Expr\')' : ''}
+${isBase ? 'const Expr = require(\'./Expr\')' : ''}
 
-class ${typeDef ? `${className} extends ${baseName}` : baseName} {
-  ${typeDef
+class ${isBase ? `${className} extends ${baseName}` : baseName} {
+  ${isBase
     ? `constructor(${argList}) {
       ${argList
           .split(', ')
