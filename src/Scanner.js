@@ -75,7 +75,7 @@ class Scanner {
           // Comments go until EOL
           while (this.isSameLine()) this.advance()
         } else {
-          this.addToken(TT.SLASH)
+          return this.addToken(TT.SLASH)
         }
         break
 
