@@ -1,11 +1,12 @@
 
 const Expr = require('./Expr')
 
-class Unary extends Expr {
-  constructor(operator, right) {
-      		this.operator = operator
-		this.right = right
+class Expr extends Expr {
+  constructor(undefined) {
+            this.
+undefined = 
+undefined
     }
 }
 
-module.exports = Unary
+module.exports = Expr

@@ -14,17 +14,18 @@ class ASTWriter {
 
   static defineAST (outputDir, baseName, types = []) {
     const baseClassPath = `${outputDir}/${baseName}.js`
-    ASTWriter.writeExprClass(path, baseName)
+    ASTWriter.writeExprClass(baseClassPath, baseName)
 
     for (const typeDef of types) {
       const parsedTypeDef = ASTWriter.parseTypeDef(typeDef)
       const subClassPath = `${outputDir}/${parsedTypeDef.className}.js`
-      ASTWriter.writeExprClass(path, baseName, parsedTypeDef)
+      ASTWriter.writeExprClass(subClassPath, baseName, parsedTypeDef)
     }
   }
 
   static writeExprClass (path, baseName, typeDef = {}) {
     const { className = baseName, argList } = typeDef
+    console.log(`Writing to [${path}]`)
     fs.writeFileSync(path,
 // Template for code generation:
 `
