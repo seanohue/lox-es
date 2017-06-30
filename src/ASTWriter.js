@@ -9,22 +9,22 @@ class ASTWriter {
       'Literal  : value',
       'Unary    : operator, right'
     ])
-    console.log(`AST generated in ${expressionsDir}.`)
+    console.log(`AST generated in [${expressionsDir}].`)
   }
 
   static defineAST (outputDir, baseName, types = []) {
-    const path = `${outputDir}/${baseName}.js`
+    const baseClassPath = `${outputDir}/${baseName}.js`
     ASTWriter.writeExprClass(path, baseName)
 
     for (const typeDef of types) {
-      ASTWriter.writeExprClass(path, baseName, typeDef)
+      const parsedTypeDef = ASTWriter.parseTypeDef(typeDef)
+      const subClassPath = `${outputDir}/${parsedTypeDef.className}}`
+      ASTWriter.writeExprClass(path, baseName, parsedTypeDef)
     }
   }
 
-  static writeExprClass (path, baseName, typeDef) {
-    const {className, argList} = typeDef
-      ? ASTWriter.parseTypeDef(typeDef)
-      : { className: baseName }
+  static writeExprClass (path, baseName, typeDef = {}) {
+    const { className = baseName, argList } = typeDef
     fs.writeFileSync(path,
 // Template for code generation:
 `
@@ -33,9 +33,11 @@ ${typeDef ? 'const Expr = require(\'./Expr\')' : ''}
 class ${typeDef ? `${className} extends ${baseName}` : baseName} {
   ${typeDef
     ? `constructor(${argList}) {
-      ${argList
+      ${['\n']
+          .concat(argList)
           .split(', ')
-          .map(arg => `this.${arg} = ${arg}\n`)}
+          .map(arg => `${' '.repeat(6)}this.${arg} = ${arg}`)
+          .join('\n')}
     }`
     : ''
   }
