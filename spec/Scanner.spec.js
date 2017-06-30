@@ -35,4 +35,10 @@ describe('Lexical Scanner', () => {
         line: 1
       }])
   })
+
+  it('should detect errors in code', () => {
+    const scanner = new Scanner('%^&*')
+    scanner.scanTokens()
+    expect(scanner.CLI.hadError).to.equal(true)
+  })
 })
