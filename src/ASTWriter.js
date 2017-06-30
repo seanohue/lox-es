@@ -22,17 +22,16 @@ class ASTWriter {
   }
 
   static writeExprClass (path, baseName, typeDef) {
-    const isBase = Object.keys(typeDef).length > 0
     const {className, argList} = typeDef
       ? ASTWriter.parseTypeDef(typeDef)
       : { className: baseName }
     fs.writeFileSync(path,
 // Template for code generation:
 `
-${isBase ? 'const Expr = require(\'./Expr\')' : ''}
+${typeDef ? 'const Expr = require(\'./Expr\')' : ''}
 
-class ${isBase ? `${className} extends ${baseName}` : baseName} {
-  ${isBase
+class ${typeDef ? `${className} extends ${baseName}` : baseName} {
+  ${typeDef
     ? `constructor(${argList}) {
       ${argList
           .split(', ')
