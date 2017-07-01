@@ -1,12 +1,6 @@
-
-const Expr = require('./Expr')
-
-class Expr extends Expr {
-  constructor(undefined) {
-            this.
-undefined = 
-undefined
-    }
+// Empty base class for expressions.
+class Expr {
+  
 }
 
 module.exports = Expr

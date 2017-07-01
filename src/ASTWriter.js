@@ -24,20 +24,19 @@ class ASTWriter {
   }
 
   static writeExprClass (path, baseName, typeDef = {}) {
+    const isBase = Object.keys(typeDef).length > 0
     const { className = baseName, argList } = typeDef
     console.log(`Writing to [${path}]`)
     fs.writeFileSync(path,
 // Template for code generation:
-`
-${typeDef ? 'const Expr = require(\'./Expr\')' : ''}
-
-class ${typeDef ? `${className} extends ${baseName}` : baseName} {
-  ${typeDef
+`${isBase ? 'const Expr = require(\'./Expr\')\n' : '// Empty base class for expressions.'}
+class ${isBase ? `${className} extends ${baseName}` : baseName} {
+  ${isBase
     ? `constructor(${argList}) {
-      ${'\n'.concat(argList)
-          .split(', ')
-          .map(arg => `${' '.repeat(6)}this.${arg} = ${arg}`)
-          .join('\n')}
+${'\n'.concat(argList)
+    .split(', ')
+    .map(arg => `${' '.repeat(6)}this.${arg.trim()} = ${arg.trim()}`)
+    .join('\n')}
     }`
     : ''
   }
